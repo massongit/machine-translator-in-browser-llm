@@ -313,13 +313,15 @@ const result = await translator.translate(inputText);
 
 ## 技術スタック
 
-| 技術                   | バージョン | 用途                                  |
-| ---------------------- | ---------- | ------------------------------------- |
-| Next.js                | 14         | Reactフレームワーク（App Router使用） |
-| TypeScript             | 5          | 型安全な開発                          |
-| React                  | 18         | UIライブラリ                          |
-| Bun                    | latest     | パッケージマネージャー・ランタイム    |
-| Tailwind CSS           | 3.4        | ユーティリティファーストCSS           |
-| iso-639-1              | 3.1        | 言語コード処理                        |
-| react-spinners         | 0.17       | ローディング表示（BarLoader）         |
-| @types/dom-chromium-ai | 0.0.11     | Chromium AI APIの型定義               |
+<!-- prettier-ignore-start -->
+| 技術                     | バージョン  | 用途                         |
+|------------------------|--------|----------------------------|
+| Next.js                | 14     | Reactフレームワーク（App Router使用） |
+| TypeScript             | 5      | 型安全な開発                     |
+| React                  | 18     | UIライブラリ                    |
+| Bun                    | latest | パッケージマネージャー・ランタイム          |
+| Tailwind CSS           | 3.4    | ユーティリティファーストCSS            |
+| iso-639-1              | 3.1    | 言語コード処理                    |
+| react-spinners         | 0.17   | ローディング表示（BarLoader）        |
+| @types/dom-chromium-ai | 0.0.11 | Chromium AI APIの型定義        |
+<!-- prettier-ignore-end -->
