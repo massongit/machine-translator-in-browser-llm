@@ -74,7 +74,7 @@ bun dev
 
 ## プロジェクト構成
 
-```
+```text
 src/
 ├── app/
 │   ├── components/
