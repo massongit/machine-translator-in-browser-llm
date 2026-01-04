@@ -126,6 +126,10 @@ export default defineConfig([
       ecmaVersion: "latest",
       sourceType: "module",
     },
+
+    rules: {
+      "react/react-in-jsx-scope": "off",
+    },
   },
   {
     files: ["**/*.vue"],
