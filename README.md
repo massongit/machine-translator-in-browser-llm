@@ -10,14 +10,14 @@ Chromium AI APIsを使用した、ブラウザ内で動作する言語検出・�
 
 ## 動作要件
 
-このアプリケーションは以下のブラウザで動作します：
+このアプリケーションは次のブラウザで動作します。
 
-- **Chrome** バージョン 138以降
-- **Opera** バージョン 122以降
+- **Chrome** バージョン138以降
+- **Opera** バージョン122以降
 
 ### 注意事項
 
-- 対応していないブラウザでアクセスした場合、「非対応ブラウザです。」というメッセージが表示されます
+- 対応していないブラウザでアクセスした場合、「非対応ブラウザです」というメッセージが表示される
 
 ## 技術スタック
 
@@ -63,14 +63,14 @@ pre-commit install
 bun dev
 ```
 
-ブラウザで [http://localhost:3000](http://localhost:3000) を開いてアプリケーションを確認できます。
+ブラウザで `http://localhost:3000` を開いてアプリケーションを確認できます。
 
 ## 使い方
 
 1. 「翻訳したい文」欄にテキストを入力
 2. 「言語推定」ボタンをクリックして言語を自動検出
 3. 翻訳元の言語と翻訳先の言語を選択
-4. 「翻訳」ボタンをクリックして翻訳を実行
+4. 「翻訳」ボタンをクリックして翻訳する
 
 ## プロジェクト構成
 
@@ -95,9 +95,9 @@ src/
 
 ### コンポーネント構成
 
-- **Translation**: 最上位コンポーネント。すべての状態を管理し、子コンポーネントに props として渡す
-- **InputForm**: テキスト入力と LanguageDetector API による言語検出を担当
-- **LanguageForm**: 言語選択と Translator API による翻訳を担当
+- **Translation**: 最上位コンポーネント。すべての状態を管理し、子コンポーネントにpropsとして渡す
+- **InputForm**: テキスト入力とLanguageDetector APIによる言語検出を担当
+- **LanguageForm**: 言語選択とTranslator APIによる翻訳を担当
 - **LanguageSelector**: 再利用可能な言語選択ドロップダウン
 
 ### 重要な実装パターン
@@ -127,5 +127,5 @@ bun run fix
 
 - [Translator API - MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/API/Translator)
 - [Language Detection API - MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/API/LanguageDetector)
-- [Chromium AI APIs](https://developer.chrome.com/docs/ai/built-in-apis)
+- [Chromium AI APIs - Chrome for Developers](https://developer.chrome.com/docs/ai/built-in?hl=ja)
 - [Next.js Documentation](https://nextjs.org/docs)

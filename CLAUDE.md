@@ -1,7 +1,6 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code)
-when working with code in this repository.
+This file provides guidance to Claude Code when working with this repository.
 
 ## プロジェクト概要
 
@@ -32,10 +31,10 @@ Chromium AI APIを使用したブラウザ内翻訳アプリケーションで�
    pre-commit install
    ```
 
-   **重要**: これにより、`.pre-commit-config.yaml`の設定に基づいて、コミット時に自動的に以下のチェックが実行されます：
+   **重要**: これにより、`.pre-commit-config.yaml`の設定に基づいて、コミット時に自動的に次のチェックが実行されます：
    - **gitleaks**: クレデンシャル（APIキー、トークンなど）が含まれていないかを検査
 
-   設定ファイル:
+   設定ファイル：
    - `.pre-commit-config.yaml`: pre-commitの設定（gitleaks v8.30.0を使用）
    - `.gitleaks.toml`: gitleaksのルール設定（デフォルト設定を使用）
 
@@ -62,7 +61,7 @@ bun run fix
 
 ### 使用しているブラウザAPI
 
-このアプリケーションは2つのChromium AI APIに完全依存しています：
+このアプリケーションは2つのChromium AI APIに完全依存しています。
 
 1. **LanguageDetector API**: 入力テキストの言語を自動検出
 2. **Translator API**: 検出された言語から任意の言語へ翻訳
@@ -71,7 +70,7 @@ bun run fix
 
 ### コンポーネントアーキテクチャ
 
-アプリケーションは状態を最上位で管理し、propsで下位に伝播させる設計です：
+アプリケーションは状態を最上位で管理し、propsで下位に伝播させる設計です。
 
 ```text
 Translation (状態管理の中心)
@@ -98,11 +97,11 @@ Translation (状態管理の中心)
 - `sourceLocales`: 検出された候補言語の配列
 - `sourceLocale`: 現在選択中の翻訳元言語
 - `outputText`: 翻訳結果
-- 各種setter関数: 状態を更新するための関数
+- 各種setter関数： 状態を更新するための関数
 
 ### 言語コードの扱い方
 
-`src/app/lib.ts`に言語コード処理のユーティリティがあります：
+`src/app/lib.ts`に言語コード処理のユーティリティがあります。
 
 ```typescript
 // デフォルトロケールは日本語
@@ -126,13 +125,13 @@ export function canConvertToDisplayName(locale: string) {
 
 1. `iso-639-1`パッケージから全言語コード取得
 2. `canConvertToDisplayName`でフィルタリング
-3. `Intl.DisplayNames`で正しく表示できる言語のみ使用
+3. `Intl.DisplayNames`でまさしく表示できる言語のみ使用
 
 これにより、`aa`のような表示できない言語コードが除外されます。
 
 ### ブラウザ対応設定
 
-package.jsonに明示的なブラウザサポート定義があります：
+package.jsonに明示的なブラウザサポート定義があります。
 
 ```json
 {
@@ -148,7 +147,7 @@ package.jsonに明示的なブラウザサポート定義があります：
 
 ### スタイリング規約
 
-このプロジェクトは一貫したTailwindパターンを使用します：
+このプロジェクトは一貫したTailwindパターンを使用します。
 
 **レイアウト**:
 
@@ -194,7 +193,7 @@ src/app/
 
 ### 1. React Hooksの呼び出し順序
 
-**ルール**: すべてのhooks（`useState`、`useEffect`）は条件分岐より前に配置する
+**ルール**: すべてのhooks（`useState`、`useEffect`）は条件分岐より前に配置する。
 
 ❌ **間違った例**:
 
@@ -219,7 +218,7 @@ function MyComponent() {
 }
 ```
 
-**理由**: Reactはhooksの呼び出し順序で内部状態を追跡します。条件分岐でhooksの数が変わると、"missing static flags"エラーが発生します。
+**理由**: Reactはhooksの呼び出し順序で内部状態を追跡します。条件分岐でhooksの数が変わると"missing static flags"エラーが発生します。
 
 ### 2. パスエイリアス
 
@@ -237,7 +236,7 @@ import { defaultLocale } from "../../../lib";
 
 ### ブラウザAPI チェックパターン
 
-ブラウザAPIは必ず`useEffect`内でチェックしてください。このプロジェクトでは**2段階のチェック**を行います：
+ブラウザAPIは必ず`useEffect`内でチェックしてください。このプロジェクトでは**2段階のチェック**を行います。
 
 ```typescript
 export default function Translation(): JSX.Element {
@@ -283,7 +282,7 @@ export default function Translation(): JSX.Element {
 
 1. **APIの存在チェック** (`in self`): APIがブラウザに実装されているか確認
 2. **availability()チェック**: APIが実装されていても、実際に利用可能かを確認
-   - これにより、APIが使えない環境で適切に「非対応ブラウザです。」を表示
+   - これにより、APIが使えない環境で適切に「非対応ブラウザです」を表示
 
 **なぜuseEffect内なのか**:
 
@@ -293,7 +292,7 @@ export default function Translation(): JSX.Element {
 
 ### API呼び出しのパターン
 
-LanguageDetectorとTranslator APIの呼び出し例：
+LanguageDetectorとTranslator APIの呼び出し例。
 
 ```typescript
 // 言語検出
