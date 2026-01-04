@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
+  --background: #fff;
   --foreground: #171717;
 }
 
@@ -20,8 +20,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+h1 {
+  font-size: revert;
+  font-weight: revert;
 }

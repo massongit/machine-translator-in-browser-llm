@@ -1,40 +1,131 @@
 # machine-translator-in-browser-llm
 
-ブラウザ内のLLMモデルを使った機械翻訳
+Chromium AI APIsを使用した、ブラウザ内で動作する言語検出・翻訳アプリケーションです。サーバーにデータを送信せず、完全にブラウザ内で処理を行います。
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## 機能
 
-## Getting Started
+- **言語自動検出**: 入力されたテキストの言語を自動的に検出
+- **ブラウザ内翻訳**: 検出された言語から任意の言語へリアルタイムで翻訳
+- **プライバシー重視**: すべての処理がブラウザ内で完結し、外部サーバーにデータを送信しません
 
-First, run the development server:
+## 動作要件
+
+このアプリケーションは次のブラウザで動作します。
+
+- **Chrome** バージョン138以降
+- **Opera** バージョン122以降
+
+### 注意事項
+
+- 対応していないブラウザでアクセスした場合、「非対応ブラウザです」というメッセージが表示される
+
+## 技術スタック
+
+- **フレームワーク**: Next.js 14 (App Router)
+- **言語**: TypeScript
+- **UIライブラリ**: React 18
+- **スタイリング**: Tailwind CSS
+- **パッケージマネージャー**: Bun
+- **対応ブラウザ**: Chrome 138+, Opera 122+ (browserslist設定済み)
+- **主な依存関係**:
+  - `iso-639-1`: BCP 47言語コードの処理
+  - `react-spinners`: ローディング表示
+  - `@types/dom-chromium-ai`: Chromium AI APIの型定義
+
+## セットアップ
+
+### 1. 依存関係のインストール
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
+bun install
+```
+
+### 2. pre-commitのセットアップ（推奨）
+
+セキュリティのため、[pre-commit](https://pre-commit.com/)をインストールしてください。コミット時にクレデンシャルが含まれていないか自動チェックされます。
+
+```bash
+# macOSの場合
+brew install pre-commit
+
+# またはpipを使用
+pip install pre-commit
+
+# pre-commitフックをインストール
+pre-commit install
+```
+
+これにより、コミット時に自動的にgitleaksが実行され、APIキーやトークンなどの機密情報が含まれていないかチェックされます。
+
+### 3. 開発サーバーの起動
+
+```bash
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+ブラウザで `http://localhost:3000` を開いてアプリケーションを確認できます。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 使い方
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. 「翻訳したい文」欄にテキストを入力
+2. 「言語推定」ボタンをクリックして言語を自動検出
+3. 翻訳元の言語と翻訳先の言語を選択
+4. 「翻訳」ボタンをクリックして翻訳する
 
-## Learn More
+## プロジェクト構成
 
-To learn more about Next.js, take a look at the following resources:
+```text
+src/
+├── app/
+│   ├── components/
+│   │   ├── body.tsx                     # ページボディコンポーネント
+│   │   └── translation/
+│   │       ├── translation.tsx          # メインコンポーネント（状態管理）
+│   │       ├── inputForm.tsx            # 入力・言語検出フォーム
+│   │       └── languageForm/
+│   │           ├── languageForm.tsx     # 言語選択・翻訳フォーム
+│   │           └── languageSelector.tsx # 言語セレクタ（再利用可能）
+│   ├── lib.ts                           # ユーティリティ関数
+│   ├── page.tsx                         # ルートページ
+│   ├── layout.tsx                       # ルートレイアウト
+│   └── globals.css                      # グローバルスタイル
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## アーキテクチャ
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### コンポーネント構成
 
-## Deploy on Vercel
+- **Translation**: 最上位コンポーネント。すべての状態を管理し、子コンポーネントにpropsとして渡す
+- **InputForm**: テキスト入力とLanguageDetector APIによる言語検出を担当
+- **LanguageForm**: 言語選択とTranslator APIによる翻訳を担当
+- **LanguageSelector**: 再利用可能な言語選択ドロップダウン
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 重要な実装パターン
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **SSRエラー回避**: ブラウザAPI（`LanguageDetector`、`Translator`）の存在チェックは `useEffect` 内でのみ実施
+- **React Hooks規則**: すべてのフックは条件分岐より前に配置
+- **型安全性**: TypeScriptの厳格モードで型チェックを実施
+- **言語コードフィルタリング**: `Intl.DisplayNames` で表示可能な言語のみを選択肢に含める
+
+## その他のコマンド
+
+```bash
+# プロダクションビルド
+bun run build
+
+# プロダクションサーバーの起動
+bun start
+
+# Lintチェック
+bun run lint
+
+# コードフォーマット
+bun run fix
+```
+
+## 参考リンク
+
+- [Translator API - MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/API/Translator)
+- [Language Detection API - MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/API/LanguageDetector)
+- [Chromium AI APIs - Chrome for Developers](https://developer.chrome.com/docs/ai/built-in?hl=ja)
+- [Next.js Documentation](https://nextjs.org/docs)
