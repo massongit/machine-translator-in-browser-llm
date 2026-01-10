@@ -300,9 +300,9 @@ package.jsonの`browserslist`設定は次の通りです。
 
 ## Tailwind CSS v4の設定
 
-このプロジェクトはTailwind CSS v4を使用しています。v3からv4への主要な変更点：
+このプロジェクトはTailwind CSS v4を使用しています。v3からv4への主要な変更点は次の通りです。
 
-### PostCSS設定（postcss.config.mjs）
+### PostCSS設定（PostCSS.config.mjs）
 
 ```javascript
 const config = {
@@ -338,7 +338,7 @@ const config = {
 | React                  | 19     | UIライブラリ                      |
 | Bun                    | latest | パッケージマネージャー・ランタイム            |
 | Tailwind CSS           | 4      | ユーティリティファーストCSS              |
-| @tailwindcss/postcss   | 4      | Tailwind CSS v4 PostCSSプラグイン |
+| @tailwindcss/PostCSS   | 4      | Tailwind CSS v4 PostCSSプラグイン |
 | iso-639-1              | 3.1    | 言語コード処理                      |
 | react-spinners         | 0.17   | ローディング表示（BarLoader）          |
 | @types/dom-chromium-ai | 0.0.11 | Chromium AI APIの型定義          |
