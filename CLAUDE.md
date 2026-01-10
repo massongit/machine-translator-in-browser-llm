@@ -4,7 +4,7 @@ This file provides guidance to Claude Code when working with code in this reposi
 
 ## プロジェクト概要
 
-Chromium AI APIを使用したブラウザ内翻訳アプリケーションです。Next.js 14で構築され、Chrome 138以降およびOpera 122以降で動作します。すべての処理がブラウザ内で完結し、サーバーにデータを送信しません。
+Chromium AI APIを使用したブラウザ内翻訳アプリケーションです。Next.js 16で構築され、Chrome 138以降およびOpera 122以降で動作します。すべての処理がブラウザ内で完結し、サーバーにデータを送信しません。
 
 ## 開発コマンド
 
@@ -298,17 +298,48 @@ package.jsonの`browserslist`設定は次の通りです。
 
 この設定により、Tailwind CSSとPostCSSが対応ブラウザ向けに最適化されたCSSを生成します。
 
+## Tailwind CSS v4の設定
+
+このプロジェクトはTailwind CSS v4を使用しています。v3からv4への主要な変更点は次の通りです。
+
+### PostCSS設定（PostCSS.config.mjs）
+
+```javascript
+const config = {
+  plugins: {
+    "@tailwindcss/postcss": {}, // v3の "tailwindcss" から変更
+  },
+};
+```
+
+### グローバルCSS（src/app/globals.css）
+
+```css
+@import "tailwindcss"; /* v3の @tailwind ディレクティブから変更 */
+
+:root {
+  --background: #fff;
+  --foreground: #171717;
+}
+```
+
+### 設定ファイル
+
+- `tailwind.config.ts`は不要（v4ではオプション）
+- カスタムテーマは`globals.css`内の`:root`または`@theme`で定義
+
 ## 技術スタック
 
 <!-- prettier-ignore-start -->
-| 技術                     | バージョン  | 用途                         |
-|------------------------|--------|----------------------------|
-| Next.js                | 14     | Reactフレームワーク（App Router使用） |
-| TypeScript             | 5      | 型安全な開発                     |
-| React                  | 18     | UIライブラリ                    |
-| Bun                    | latest | パッケージマネージャー・ランタイム          |
-| Tailwind CSS           | 3.4    | ユーティリティファーストCSS            |
-| iso-639-1              | 3.1    | 言語コード処理                    |
-| react-spinners         | 0.17   | ローディング表示（BarLoader）        |
-| @types/dom-chromium-ai | 0.0.11 | Chromium AI APIの型定義        |
+| 技術                     | バージョン  | 用途                           |
+|------------------------|--------|------------------------------|
+| Next.js                | 16     | Reactフレームワーク（App Router使用）   |
+| TypeScript             | 5      | 型安全な開発                       |
+| React                  | 19     | UIライブラリ                      |
+| Bun                    | latest | パッケージマネージャー・ランタイム            |
+| Tailwind CSS           | 4      | ユーティリティファーストCSS              |
+| @tailwindcss/PostCSS   | 4      | Tailwind CSS v4 PostCSSプラグイン |
+| iso-639-1              | 3.1    | 言語コード処理                      |
+| react-spinners         | 0.17   | ローディング表示（BarLoader）          |
+| @types/dom-chromium-ai | 0.0.11 | Chromium AI APIの型定義          |
 <!-- prettier-ignore-end -->
