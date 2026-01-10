@@ -1,42 +1,10 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code when working with this repository.
+This file provides guidance to Claude Code when working with code in this repository.
 
 ## プロジェクト概要
 
 Chromium AI APIを使用したブラウザ内翻訳アプリケーションです。Next.js 14で構築され、Chrome 138以降およびOpera 122以降で動作します。すべての処理がブラウザ内で完結し、サーバーにデータを送信しません。
-
-## 開発環境
-
-### セットアップ
-
-1. **依存関係のインストール**:
-
-   ```bash
-   bun install
-   ```
-
-2. **pre-commitのインストール**:
-
-   [pre-commit](https://pre-commit.com/) の手順に従って `pre-commit` をインストールしてください。
-
-   ```bash
-   # macOSの場合
-   brew install pre-commit
-
-   # またはpipを使用
-   pip install pre-commit
-
-   # pre-commitフックをインストール
-   pre-commit install
-   ```
-
-   **重要**: これにより、`.pre-commit-config.yaml`の設定に基づいて、コミット時に自動的に次のチェックが実行されます：
-   - **gitleaks**: クレデンシャル（APIキー、トークンなど）が含まれていないかを検査
-
-   設定ファイル：
-   - `.pre-commit-config.yaml`: pre-commitの設定（gitleaks v8.30.0を使用）
-   - `.gitleaks.toml`: gitleaksのルール設定（デフォルト設定を使用）
 
 ## 開発コマンド
 
@@ -57,54 +25,109 @@ bun run lint
 bun run fix
 ```
 
-## アーキテクチャの理解
+## セットアップ
 
-### 使用しているブラウザAPI
+### 依存関係のインストール
+
+```bash
+bun install
+```
+
+### pre-commitのインストール（推奨）
+
+コミット時にgitleaksが自動実行され、機密情報の混入を防ぎます。
+
+```bash
+# macOSの場合
+brew install pre-commit
+
+# またはpipを使用
+pip install pre-commit
+
+# pre-commitフックをインストール
+pre-commit install
+```
+
+## アーキテクチャ
+
+### ブラウザAPI依存の重要な注意点
 
 このアプリケーションは2つのChromium AI APIに完全依存しています。
 
 1. **LanguageDetector API**: 入力テキストの言語を自動検出
 2. **Translator API**: 検出された言語から任意の言語へ翻訳
 
-**クリティカルな注意事項**: これらのAPIはブラウザ専用です。Next.jsのSSR（サーバーサイドレンダリング）環境では存在しないため、必ず`useEffect`フック内でのみチェックしてください。コンポーネントの初期化時やレンダリング中に直接アクセスすると、SSRエラーが発生します。
+**クリティカルな制約**: これらのAPIはブラウザ専用です。
+Next.jsのSSR環境では存在しないため、次のパターンを使用します。
 
-### コンポーネントアーキテクチャ
+### SSRエラー回避パターン
 
-アプリケーションは状態を最上位で管理し、propsで下位に伝播させる設計です。
+ブラウザAPIを使用するコンポーネントは、`dynamic` importで`ssr: false`を指定してクライアント側でのみレンダリングします。
+
+**body.tsx (ラッパーコンポーネント)**:
+
+```typescript
+import dynamic from "next/dynamic";
+
+const Translation = dynamic(
+  () => import("@/components/translation/translation"),
+  { ssr: false },
+);
+```
+
+**translation.tsx (ブラウザAPIを使用するコンポーネント)**:
+
+```typescript
+"use client";
+
+export default function Translation(): JSX.Element {
+  const [isSupportedBrowser, setIsSupportedBrowser] = useState<boolean>(false);
+
+  // APIの存在チェック（クライアント側でのみ実行される）
+  if ("LanguageDetector" in self && "Translator" in self) {
+    (async () => {
+      const availability = await LanguageDetector.availability();
+      setIsSupportedBrowser(availability !== "unavailable");
+    })();
+  }
+
+  if (!isSupportedBrowser) {
+    return <div>非対応ブラウザです。</div>;
+  }
+  // ...
+}
+```
+
+このパターンにより、次の利点があります。
+
+- `ssr: false`でSSR時にコンポーネントがスキップされる
+- クライアント側でのみ`self`や`window`にアクセスできる
+- `useEffect`を使わずに直接APIチェックが可能
+
+### コンポーネント構成
 
 ```text
 Translation (状態管理の中心)
   │
   ├─ InputForm
   │   └─ 役割: テキスト入力と言語検出
-  │   └─ 状態: inputText を管理
-  │   └─ 副作用: LanguageDetector API を呼び出し
-  │   └─ 出力: sourceLocales[] と sourceLocale を設定
+  │   └─ API: LanguageDetector.detect()
+  │   └─ 出力: sourceLocales[], sourceLocale
   │
   └─ LanguageForm
       └─ 役割: 言語選択と翻訳実行
-      └─ 状態: targetLanguage と loading を管理
-      └─ 副作用: Translator API を呼び出し
-      └─ 出力: outputText を設定
-      └─ 子コンポーネント:
-          ├─ LanguageSelector (翻訳元言語)
-          └─ LanguageSelector (翻訳先言語)
+      └─ API: Translator.create(), translate()
+      └─ 出力: outputText
+      └─ 子: LanguageSelector (翻訳元/翻訳先)
 ```
 
-**状態フロー**:
+状態は最上位の`Translation`で管理され、propsで下位に伝播します。
 
-- `inputText`: ユーザー入力テキスト
-- `sourceLocales`: 検出された候補言語の配列
-- `sourceLocale`: 現在選択中の翻訳元言語
-- `outputText`: 翻訳結果
-- 各種setter関数： 状態を更新するための関数
+### 言語コード処理
 
-### 言語コードの扱い方
-
-`src/app/lib.ts`に言語コード処理のユーティリティがあります。
+`src/app/lib.ts`に言語コード関連のユーティリティがあります。
 
 ```typescript
-// デフォルトロケールは日本語
 export const defaultLocale: string = "ja";
 
 // ISO 639-1コードを日本語の言語名に変換
@@ -121,79 +144,19 @@ export function canConvertToDisplayName(locale: string) {
 }
 ```
 
-**重要な処理フロー**:
+処理フローは次の通りです。
 
 1. `iso-639-1`パッケージから全言語コード取得
 2. `canConvertToDisplayName`でフィルタリング
-3. `Intl.DisplayNames`でまさしく表示できる言語のみ使用
+3. `Intl.DisplayNames`で表示可能な言語のみ使用
 
 これにより、`aa`のような表示できない言語コードが除外されます。
 
-### ブラウザ対応設定
-
-package.jsonに明示的なブラウザサポート定義があります。
-
-```json
-{
-  "browserslist": ["chrome >= 138", "opera >= 122", "not dead"]
-}
-```
-
-**この設定の効果**:
-
-- Tailwind CSSが対応ブラウザ向けに最適化されたCSSを生成
-- PostCSSが不要なベンダープレフィックスを削除
-- Next.jsのトランスパイル設定が最適化
-
-### スタイリング規約
-
-このプロジェクトは一貫したTailwindパターンを使用します。
-
-**レイアウト**:
-
-- `flex`と`flex-col`でFlexboxレイアウト
-- `gap-2`で要素間のスペーシング
-- `items-center`で垂直方向の中央揃え
-
-**フォーム要素**:
-
-```tsx
-// 入力フィールドとセレクトの標準スタイル
-className = "border rounded px-2 py-1 focus:outline-none focus:ring-2";
-
-// ボタンの標準スタイル
-className =
-  "border rounded px-3 py-1 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed";
-```
-
-**言語設定**:
-
-- HTMLの`lang`属性は`"ja"`
-- UIテキストはすべて日本語
-
-### ディレクトリ構造
-
-```text
-src/app/
-├── lib.ts                           # 共有ユーティリティ（言語コード処理）
-├── page.tsx                         # ルートページ
-├── layout.tsx                       # ルートレイアウト
-├── globals.css                      # グローバルスタイル
-└── components/
-    ├── body.tsx                     # メインコンテンツラッパー
-    └── translation/
-        ├── translation.tsx          # 状態管理コンポーネント
-        ├── inputForm.tsx            # 入力フォームと言語検出
-        └── languageForm/
-            ├── languageForm.tsx     # 翻訳フォーム
-            └── languageSelector.tsx # 言語選択ドロップダウン（再利用可能）
-```
-
-## 重要な実装パターン
+## 重要な実装ルール
 
 ### 1. React Hooksの呼び出し順序
 
-**ルール**: すべてのhooks（`useState`、`useEffect`）は条件分岐より前に配置する。
+すべてのhooks（`useState`、`useEffect`）は条件分岐より前に配置する必要があります。
 
 ❌ **間違った例**:
 
@@ -218,11 +181,37 @@ function MyComponent() {
 }
 ```
 
-**理由**: Reactはhooksの呼び出し順序で内部状態を追跡します。条件分岐でhooksの数が変わると"missing static flags"エラーが発生します。
+**理由**: Reactはhooksの呼び出し順序で内部状態を追跡します。条件分岐でhooksの数が変わるとエラーが発生します。
 
-### 2. パスエイリアス
+### 2. useEffect内でのsetState呼び出しを避ける
 
-**ルール**: インポートは`@/`エイリアスを使用（`./src/`にマッピング）
+派生状態（他の状態から計算できる値）は、状態ではなく計算値として定義します。
+
+❌ **間違った例**:
+
+```typescript
+const [loading, setLoading] = useState(false);
+const [inputText, setInputText] = useState("");
+const [buttonDisabled, setButtonDisabled] = useState(true);
+
+useEffect(() => {
+  setButtonDisabled(loading || inputText === "");
+}, [loading, inputText]);
+```
+
+✅ **正しい例**:
+
+```typescript
+const [loading, setLoading] = useState(false);
+const [inputText, setInputText] = useState("");
+const buttonDisabled = loading || inputText === ""; // 計算値として定義
+```
+
+**理由**: `useEffect`内での同期的な`setState`呼び出しは、カスケード的なレンダリングを引き起こしパフォーマンスに悪影響を与えます。
+
+### 3. パスエイリアス
+
+インポートは`@/`エイリアスを使用します（`./src/`にマッピング）。
 
 ```typescript
 // ✅ 推奨
@@ -232,84 +221,80 @@ import { defaultLocale } from "@/app/lib";
 import { defaultLocale } from "../../../lib";
 ```
 
-## SSRエラーを回避する方法
+### 4. ESLint設定
 
-### ブラウザAPI チェックパターン
+- **ESLint v9 Flat Config形式**を使用
+- `n/no-missing-import`は無効化（Next.jsのパスエイリアスをサポートするため）
+- package.jsonの`lint`スクリプトは`eslint .`を使用（`next lint`ではない）
 
-ブラウザAPIは必ず`useEffect`内でチェックしてください。このプロジェクトでは**2段階のチェック**を行います。
+## API呼び出しパターン
 
-```typescript
-export default function Translation(): JSX.Element {
-  // 状態定義は最初に
-  const [isSupportedBrowser, setIsSupportedBrowser] = useState<boolean>();
-
-  // ブラウザAPIのチェックはuseEffect内でのみ
-  useEffect(() => {
-    // ステップ1: APIの存在チェック
-    if (["LanguageDetector", "Translator"].some((v) => !(v in self))) {
-      setIsSupportedBrowser(false);
-      return;
-    }
-
-    // ステップ2: LanguageDetectorの実際の利用可能性をチェック
-    (async () => {
-      const languageDetectorAvailability: Availability =
-        await LanguageDetector.availability();
-      setIsSupportedBrowser(languageDetectorAvailability !== "unavailable");
-    })();
-  }, []);
-
-  // ローディング状態の表示
-  if (isSupportedBrowser === undefined) {
-    return <div>読み込み中......</div>;
-  }
-
-  // 非対応ブラウザの表示
-  if (!isSupportedBrowser) {
-    return <div>非対応ブラウザです。</div>;
-  }
-
-  // 通常のレンダリング
-  return (
-    <div className="m-auto flex flex-col gap-2">
-      {/* コンポーネント内容 */}
-    </div>
-  );
-}
-```
-
-**2段階チェックの理由**:
-
-1. **APIの存在チェック** (`in self`): APIがブラウザに実装されているか確認
-2. **availability()チェック**: APIが実装されていても、実際に利用可能かを確認
-   - これにより、APIが使えない環境で適切に「非対応ブラウザです」を表示
-
-**なぜuseEffect内なのか**:
-
-- `useEffect`はクライアント側でのみ実行される
-- SSR時にはスキップされる
-- ブラウザAPIの存在をサーバー側でチェックしようとするとエラーになる
-
-### API呼び出しのパターン
-
-LanguageDetectorとTranslator APIの呼び出し例。
+### 言語検出
 
 ```typescript
-// 言語検出
 const languageDetector = await LanguageDetector.create();
 const languageDetections = await languageDetector.detect(inputText);
 const detectedLanguages = languageDetections
   .map(({ detectedLanguage }) => detectedLanguage)
   .filter((dl): dl is string => typeof dl === "string")
   .filter(canConvertToDisplayName);
-
-// 翻訳
-const translator = await Translator.create({
-  sourceLanguage,
-  targetLanguage,
-});
-const result = await translator.translate(inputText);
 ```
+
+### 翻訳
+
+```typescript
+try {
+  const translator = await Translator.create({
+    sourceLanguage,
+    targetLanguage,
+  });
+  const result = await translator.translate(inputText);
+  setOutputText(result);
+} catch {
+  // エラーハンドリング（対応していない言語ペアなど）
+  alert(
+    `${localeToDisplayName(sourceLanguage)}から${localeToDisplayName(targetLanguage)}への翻訳には対応していません。`,
+  );
+}
+```
+
+## スタイリング規約
+
+Tailwind CSSの一貫したパターンを使用します。
+
+**レイアウト**:
+
+- `flex`と`flex-col`でFlexboxレイアウト
+- `gap-2`で要素間のスペーシング
+- `items-center`で垂直方向の中央揃え
+
+**フォーム要素**:
+
+```tsx
+// 入力フィールドとセレクト
+className = "border rounded px-2 py-1 focus:outline-none focus:ring-2";
+
+// ボタン
+className =
+  "border rounded px-3 py-1 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed";
+```
+
+**言語設定**:
+
+- HTMLの`lang`属性は`"ja"`
+- UIテキストはすべて日本語
+
+## ブラウザ対応
+
+package.jsonの`browserslist`設定は次の通りです。
+
+```json
+{
+  "browserslist": ["chrome >= 138", "opera >= 122", "not dead"]
+}
+```
+
+この設定により、Tailwind CSSとPostCSSが対応ブラウザ向けに最適化されたCSSを生成します。
 
 ## 技術スタック
 

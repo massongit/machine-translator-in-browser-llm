@@ -1,5 +1,10 @@
+import dynamic from "next/dynamic";
 import { JSX } from "react";
-import Translation from "@/components/translation/translation";
+
+const Translation = dynamic(
+  () => import("@/components/translation/translation"),
+  { ssr: false },
+);
 
 export function Body(): JSX.Element {
   return (

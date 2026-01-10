@@ -1,9 +1,13 @@
 import type { LanguageCode } from "iso-639-1";
 import ISO6391 from "iso-639-1";
-import { JSX, useEffect, useState } from "react";
+import { JSX, useState } from "react";
 import { BarLoader } from "react-spinners";
 import { LanguageSelector } from "@/components/translation/languageForm/languageSelector";
-import { canConvertToDisplayName, defaultLocale } from "@/app/lib";
+import {
+  canConvertToDisplayName,
+  defaultLocale,
+  localeToDisplayName,
+} from "@/app/lib";
 
 export function LanguageForm({
   inputText,
@@ -20,28 +24,9 @@ export function LanguageForm({
 }): JSX.Element | undefined {
   const [targetLanguage, setTargetLanguage] = useState(defaultLocale);
   const [loading, setLoading] = useState(false);
-  const [buttonDisabled, setButtonDisabled] = useState(true);
   const allLocales: LanguageCode[] = ISO6391.getAllCodes().filter(
     canConvertToDisplayName,
   );
-  useEffect(() => {
-    if (
-      sourceLocales.length === 0 ||
-      loading ||
-      sourceLanguage === targetLanguage
-    ) {
-      setButtonDisabled(true);
-      return;
-    }
-
-    (async () => {
-      const availability: Availability = await Translator.availability({
-        sourceLanguage,
-        targetLanguage,
-      });
-      setButtonDisabled(availability === "unavailable");
-    })();
-  }, [loading, sourceLocales, sourceLanguage, targetLanguage]);
 
   if (sourceLocales.length === 0) {
     return;
@@ -72,14 +57,22 @@ export function LanguageForm({
         onClick={async () => {
           setLoading(true);
           setOutputText("");
-          const translator: Translator = await Translator.create({
-            sourceLanguage,
-            targetLanguage,
-          });
-          setOutputText(await translator.translate(inputText));
+
+          try {
+            const translator: Translator = await Translator.create({
+              sourceLanguage,
+              targetLanguage,
+            });
+            setOutputText(await translator.translate(inputText));
+          } catch {
+            alert(
+              `${localeToDisplayName(sourceLanguage)}から${localeToDisplayName(targetLanguage)}への翻訳には対応していません。`,
+            );
+          }
+
           setLoading(false);
         }}
-        disabled={buttonDisabled}
+        disabled={loading || sourceLanguage === targetLanguage}
       >
         翻訳
         <BarLoader width="100%" loading={loading} />

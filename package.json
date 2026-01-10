@@ -6,7 +6,7 @@
     "dev": "bun install && next dev",
     "build": "next build",
     "start": "bun run build && next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "fix": "prettier --write ."
   },
   "dependencies": {

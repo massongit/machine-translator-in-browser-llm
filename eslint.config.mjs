@@ -129,6 +129,7 @@ export default defineConfig([
 
     rules: {
       "react/react-in-jsx-scope": "off",
+      "n/no-missing-import": "off",
     },
   },
   {

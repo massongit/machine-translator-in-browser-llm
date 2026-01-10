@@ -1,4 +1,4 @@
-import { JSX, useEffect, useState } from "react";
+import { JSX, useState } from "react";
 import { BarLoader } from "react-spinners";
 import { canConvertToDisplayName } from "@/app/lib";
 
@@ -17,7 +17,7 @@ export function InputForm({
 }): JSX.Element {
   const [isComposing, setIsComposing] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [buttonDisabled, setButtonDisabled] = useState(true);
+  const buttonDisabled = loading || inputText === "";
   const onButtonClick = async () => {
     setLoading(true);
     setSourceLocales([]);
@@ -36,10 +36,6 @@ export function InputForm({
     }
     setLoading(false);
   };
-  useEffect(
-    () => setButtonDisabled(loading || inputText === ""),
-    [loading, inputText],
-  );
   return (
     <div className="flex gap-2">
       <label className="flex flex-1 items-center gap-2">
