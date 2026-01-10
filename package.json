@@ -21,7 +21,7 @@
     "@textlint-ja/textlint-rule-no-insert-dropping-sa": "2.0.1",
     "@types/dom-chromium-ai": "0.0.11",
     "@types/minimatch": "6.0.0",
-    "@types/node": "20.10.4",
+    "@types/node": "20.19.27",
     "@types/react": "18.3.27",
     "@types/react-dom": "18.3.7",
     "eslint": "9.39.2",
