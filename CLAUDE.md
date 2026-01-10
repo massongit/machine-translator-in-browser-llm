@@ -83,13 +83,15 @@ const Translation = dynamic(
 export default function Translation(): JSX.Element {
   const [isSupportedBrowser, setIsSupportedBrowser] = useState<boolean>(false);
 
-  // APIの存在チェック（クライアント側でのみ実行される）
-  if ("LanguageDetector" in self && "Translator" in self) {
-    (async () => {
-      const availability = await LanguageDetector.availability();
-      setIsSupportedBrowser(availability !== "unavailable");
-    })();
-  }
+  // APIの存在チェック（useEffect内で実行）
+  useEffect(() => {
+    if ("LanguageDetector" in self && "Translator" in self) {
+      (async () => {
+        const availability = await LanguageDetector.availability();
+        setIsSupportedBrowser(availability !== "unavailable");
+      })();
+    }
+  }, []);
 
   if (!isSupportedBrowser) {
     return <div>非対応ブラウザです。</div>;
@@ -102,7 +104,7 @@ export default function Translation(): JSX.Element {
 
 - `ssr: false`でSSR時にコンポーネントがスキップされる
 - クライアント側でのみ`self`や`window`にアクセスできる
-- `useEffect`を使わずに直接APIチェックが可能
+- `useEffect`でレンダリング中の副作用を防ぐ
 
 ### コンポーネント構成
 

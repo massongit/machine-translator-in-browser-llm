@@ -1,5 +1,5 @@
 "use client";
-import { JSX, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 import { InputForm } from "@/components/translation/inputForm";
 import { LanguageForm } from "@/components/translation/languageForm/languageForm";
 
@@ -11,14 +11,16 @@ export default function Translation(): JSX.Element {
   const [sourceLocale, setSourceLocale] = useState("");
 
   // APIの存在チェック
-  if ("LanguageDetector" in self && "Translator" in self) {
-    // LanguageDetectorの実際の利用可能性をチェック
-    (async () => {
-      const languageDetectorAvailability: Availability =
-        await LanguageDetector.availability();
-      setIsSupportedBrowser(languageDetectorAvailability !== "unavailable");
-    })();
-  }
+  useEffect(() => {
+    if ("LanguageDetector" in self && "Translator" in self) {
+      // LanguageDetectorの実際の利用可能性をチェック
+      (async () => {
+        const languageDetectorAvailability: Availability =
+          await LanguageDetector.availability();
+        setIsSupportedBrowser(languageDetectorAvailability !== "unavailable");
+      })();
+    }
+  }, []);
 
   if (!isSupportedBrowser) {
     return <div>非対応ブラウザです。</div>;
