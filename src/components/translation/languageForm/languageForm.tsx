@@ -7,6 +7,7 @@ import {
   canConvertToDisplayName,
   defaultLocale,
   localeToDisplayName,
+  translate,
 } from "@/app/lib";
 
 export function LanguageForm({
@@ -59,11 +60,9 @@ export function LanguageForm({
           setOutputText("");
 
           try {
-            const translator: Translator = await Translator.create({
-              sourceLanguage,
-              targetLanguage,
-            });
-            setOutputText(await translator.translate(inputText));
+            setOutputText(
+              await translate({ inputText, sourceLanguage, targetLanguage }),
+            );
           } catch {
             alert(
               `${localeToDisplayName(sourceLanguage)}から${localeToDisplayName(targetLanguage)}への翻訳には対応していません。`,
