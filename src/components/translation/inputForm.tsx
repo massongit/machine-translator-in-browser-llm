@@ -44,7 +44,12 @@ export function InputForm({
           name="input"
           className="flex-1 border rounded px-2 py-1 focus:outline-none focus:ring-2"
           value={inputText}
-          onChange={({ target }) => setInputText(target.value)}
+          onChange={({ target }) => {
+            setInputText(target.value);
+            if (target.value === "") {
+              setSourceLocales([]);
+            }
+          }}
           onCompositionStart={() => setIsComposing(true)}
           onCompositionEnd={() => setIsComposing(false)}
           onKeyDown={async ({ key }) => {
