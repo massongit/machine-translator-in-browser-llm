@@ -342,7 +342,7 @@ const config = {
 | Node.js                  | 24.x       | ランタイム環境（必須）                |
 | Bun                      | latest     | パッケージマネージャー・ランタイム    |
 | Tailwind CSS             | 4          | ユーティリティファーストCSS           |
-| `@tailwindcss/postcss` | 4          | Tailwind CSS v4 PostCSSプラグイン     |
+| `@tailwindcss/postcss`   | 4          | Tailwind CSS v4 PostCSSプラグイン     |
 | iso-639-1                | 3.1        | 言語コード処理                        |
 | react-spinners           | 0.17       | ローディング表示（BarLoader）         |
 | @types/dom-chromium-ai   | 0.0.13     | Chromium AI APIの型定義               |
