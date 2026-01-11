@@ -11,7 +11,7 @@ export function canConvertToDisplayName(locale: string) {
   return locale !== "und" && localeToDisplayName(locale) !== locale;
 }
 
-export async function checkLanguageDetectorAvailability(): Promise<boolean> {
+export async function checkAPIAvailability(): Promise<boolean> {
   if (!("LanguageDetector" in self) || !("Translator" in self)) {
     return false;
   }
