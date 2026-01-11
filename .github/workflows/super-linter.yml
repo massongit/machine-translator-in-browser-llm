@@ -60,7 +60,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BRANCH: main
           LINTER_RULES_PATH: .
-          VALIDATE_TYPESCRIPT_STANDARD: false
           VALIDATE_GIT_COMMITLINT: false
           VALIDATE_CHECKOV: false
           VALIDATE_BIOME_FORMAT: false
