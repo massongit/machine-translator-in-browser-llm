@@ -1,6 +1,6 @@
 import { JSX, useState } from "react";
 import { BarLoader } from "react-spinners";
-import { canConvertToDisplayName } from "@/app/lib";
+import { detectLanguages } from "@/app/lib";
 
 export function InputForm({
   inputText,
@@ -22,13 +22,7 @@ export function InputForm({
     setLoading(true);
     setSourceLocales([]);
     setOutputText("");
-    const languageDetector: LanguageDetector = await LanguageDetector.create();
-    const languageDetections: LanguageDetectionResult[] =
-      await languageDetector.detect(inputText);
-    const newSourceLocales: string[] = languageDetections
-      .map(({ detectedLanguage }) => detectedLanguage)
-      .filter((dl): dl is string => typeof dl === "string")
-      .filter(canConvertToDisplayName);
+    const newSourceLocales = await detectLanguages(inputText);
 
     if (0 < newSourceLocales.length) {
       setSourceLocales(newSourceLocales);
