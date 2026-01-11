@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "@proofdict/textlint-rule-proofdict": "3.1.2",
-    "@tailwindcss/postcss": "^4.1.18",
+    "@tailwindcss/postcss": "4.1.18",
     "@textlint-ja/textlint-rule-no-insert-dropping-sa": "2.0.1",
     "@types/dom-chromium-ai": "0.0.13",
     "@types/minimatch": "6.0.0",
