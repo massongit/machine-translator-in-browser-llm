@@ -121,9 +121,12 @@ Translation (状態管理の中心)
       └─ API: Translator.create(), translate()
       └─ 出力: outputText
       └─ 子: LanguageSelector (翻訳元/翻訳先)
+      └─ 表示条件: sourceLocales.length > 0（空配列の場合は非表示）
 ```
 
 状態は最上位の`Translation`で管理され、propsで下位に伝播します。
+
+**重要**: `LanguageForm`は`sourceLocales.length === 0`の場合にundefinedを返して非表示になります。したがって、`InputForm`で入力テキストがクリアされた際に`setSourceLocales([])`を呼び出すと、`LanguageForm`が自動的に非表示になります。
 
 ### 言語コード処理
 
@@ -336,10 +339,11 @@ const config = {
 | Next.js                  | 16         | Reactフレームワーク（App Router使用） |
 | TypeScript               | 5          | 型安全な開発                          |
 | React                    | 19         | UIライブラリ                          |
+| Node.js                  | 24.x       | ランタイム環境（必須）                |
 | Bun                      | latest     | パッケージマネージャー・ランタイム    |
 | Tailwind CSS             | 4          | ユーティリティファーストCSS           |
-| @tailwindcss/PostCSS     | 4          | Tailwind CSS v4 PostCSSプラグイン     |
+| `@tailwindcss/postcss`     | 4          | Tailwind CSS v4 PostCSSプラグイン     |
 | iso-639-1                | 3.1        | 言語コード処理                        |
 | react-spinners           | 0.17       | ローディング表示（BarLoader）         |
-| @types/dom-chromium-ai   | 0.0.11     | Chromium AI APIの型定義               |
+| @types/dom-chromium-ai   | 0.0.13     | Chromium AI APIの型定義               |
 <!-- prettier-ignore-end -->
