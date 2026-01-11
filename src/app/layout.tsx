@@ -4,8 +4,8 @@ import { defaultLocale } from "@/app/lib";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "ブラウザ内のLLMモデルによる言語推定と機械翻訳",
-  description: "ブラウザ内のLLMモデルによる言語推定と機械翻訳",
+  title: "ブラウザ内のLLMによる言語推定と機械翻訳",
+  description: "ブラウザ内のLLMによる言語推定と機械翻訳",
 };
 
 export default function RootLayout({
