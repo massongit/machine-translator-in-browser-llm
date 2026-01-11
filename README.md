@@ -130,7 +130,7 @@ bun run fix
 
 ## 参考リンク
 
-- [Translator API - MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/API/Translator)
-- [Language Detection API - MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/API/LanguageDetector)
-- [Chromium AI APIs - Chrome for Developers](https://developer.chrome.com/docs/ai/built-in?hl=ja)
-- [Next.js Documentation](https://nextjs.org/docs)
+- [Translator - Web APIs | MDN](https://developer.mozilla.org/en-US/docs/Web/API/Translator)
+- [LanguageDetector - Web APIs | MDN](https://developer.mozilla.org/en-US/docs/Web/API/LanguageDetector)
+- [組み込みの AI  |  AI on Chrome  |  Chrome for Developers](https://developer.chrome.com/docs/ai/built-in?hl=ja)
+- [Next.js Docs | Next.js](https://nextjs.org/docs)
