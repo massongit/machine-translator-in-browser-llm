@@ -13,11 +13,9 @@ export default function Translation(): JSX.Element {
 
   // APIの存在チェック
   useEffect(() => {
-    if ("LanguageDetector" in self && "Translator" in self) {
-      // LanguageDetectorの実際の利用可能性をチェック
-      (async () =>
-        setIsSupportedBrowser(await checkLanguageDetectorAvailability()))();
-    }
+    // LanguageDetectorの実際の利用可能性をチェック
+    (async () =>
+      setIsSupportedBrowser(await checkLanguageDetectorAvailability()))();
   }, []);
 
   if (!isSupportedBrowser) {
