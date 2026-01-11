@@ -12,6 +12,10 @@ export function canConvertToDisplayName(locale: string) {
 }
 
 export async function checkLanguageDetectorAvailability(): Promise<boolean> {
+  if (!("LanguageDetector" in self) || !("Translator" in self)) {
+    return false;
+  }
+
   const languageDetectorAvailability: Availability =
     await LanguageDetector.availability();
   return languageDetectorAvailability !== "unavailable";
