@@ -24,7 +24,7 @@ Chromium AI APIsを使用した、ブラウザ内で動作する言語検出・�
 - **フレームワーク**: Next.js 16 (App Router)
 - **言語**: TypeScript 5
 - **UIライブラリ**: React 19
-- **スタイリング**: Tailwind CSS v4 (@tailwindcss/postcss)
+- **スタイリング**: Tailwind CSS v4 (@tailwindcss/PostCSS)
 - **パッケージマネージャー**: Bun
 - **Node.js**: 24.x
 - **対応ブラウザ**: Chrome 138+, Opera 122+ (browserslist設定済み)
