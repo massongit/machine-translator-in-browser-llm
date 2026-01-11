@@ -18,6 +18,9 @@ bun run build
 # プロダクションサーバーを起動
 bun start
 
+# ユニットテストを実行（Bunテストランナー）
+bun test
+
 # Lintでコード品質をチェック
 bun run lint
 
