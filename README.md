@@ -87,6 +87,7 @@ src/
 │   │           ├── languageForm.tsx     # 言語選択・翻訳フォーム
 │   │           └── languageSelector.tsx # 言語セレクタ（再利用可能）
 │   ├── lib.ts                           # ユーティリティ関数
+│   ├── lib.test.ts                      # ユーティリティ関数のテスト
 │   ├── page.tsx                         # ルートページ
 │   ├── layout.tsx                       # ルートレイアウト
 │   └── globals.css                      # グローバルスタイル
@@ -116,6 +117,9 @@ bun run build
 
 # プロダクションサーバーの起動
 bun start
+
+# ユニットテストの実行
+bun test
 
 # Lintチェック
 bun run lint
