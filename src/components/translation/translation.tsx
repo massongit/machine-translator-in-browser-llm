@@ -1,5 +1,6 @@
 "use client";
 import { JSX, useEffect, useState } from "react";
+import { checkLanguageDetectorAvailability } from "@/app/lib";
 import { InputForm } from "@/components/translation/inputForm";
 import { LanguageForm } from "@/components/translation/languageForm/languageForm";
 
@@ -14,11 +15,8 @@ export default function Translation(): JSX.Element {
   useEffect(() => {
     if ("LanguageDetector" in self && "Translator" in self) {
       // LanguageDetectorの実際の利用可能性をチェック
-      (async () => {
-        const languageDetectorAvailability: Availability =
-          await LanguageDetector.availability();
-        setIsSupportedBrowser(languageDetectorAvailability !== "unavailable");
-      })();
+      (async () =>
+        setIsSupportedBrowser(await checkLanguageDetectorAvailability()))();
     }
   }, []);
 
