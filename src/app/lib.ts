@@ -22,7 +22,9 @@ export function canConvertToDisplayName(locale: string) {
 }
 
 export async function detectLanguages(inputText: string): Promise<string[]> {
+  // モデルダウンロード
   const languageDetector: LanguageDetector = await LanguageDetector.create();
+
   const languageDetections: LanguageDetectionResult[] =
     await languageDetector.detect(inputText);
   return languageDetections
@@ -40,9 +42,11 @@ export async function translate({
   sourceLanguage: string;
   targetLanguage: string;
 }): Promise<string> {
+  // モデルダウンロード
   const translator: Translator = await Translator.create({
     sourceLanguage,
     targetLanguage,
   });
+
   return await translator.translate(inputText);
 }
