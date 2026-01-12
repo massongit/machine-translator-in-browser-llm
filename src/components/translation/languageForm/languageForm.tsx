@@ -63,10 +63,14 @@ export function LanguageForm({
             setOutputText(
               await translate({ inputText, sourceLanguage, targetLanguage }),
             );
-          } catch {
-            alert(
-              `${localeToDisplayName(sourceLanguage)}から${localeToDisplayName(targetLanguage)}への翻訳には対応していません。`,
-            );
+          } catch (e) {
+            if (e instanceof DOMException && e.name === "NotSupportedError") {
+              alert(
+                `${localeToDisplayName(sourceLanguage)}から${localeToDisplayName(targetLanguage)}への翻訳には対応していません。`,
+              );
+            } else {
+              throw e;
+            }
           }
 
           setLoading(false);
