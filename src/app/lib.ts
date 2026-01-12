@@ -1,5 +1,15 @@
 export const defaultLocale: string = "ja";
 
+export async function checkAPIAvailability(): Promise<boolean> {
+  if (!("LanguageDetector" in self) || !("Translator" in self)) {
+    return false;
+  }
+
+  const languageDetectorAvailability: Availability =
+    await LanguageDetector.availability();
+  return languageDetectorAvailability !== "unavailable";
+}
+
 export function localeToDisplayName(locale: string): string | undefined {
   const displayNames: Intl.DisplayNames = new Intl.DisplayNames(defaultLocale, {
     type: "language",
@@ -9,16 +19,6 @@ export function localeToDisplayName(locale: string): string | undefined {
 
 export function canConvertToDisplayName(locale: string) {
   return locale !== "und" && localeToDisplayName(locale) !== locale;
-}
-
-export async function checkAPIAvailability(): Promise<boolean> {
-  if (!("LanguageDetector" in self) || !("Translator" in self)) {
-    return false;
-  }
-
-  const languageDetectorAvailability: Availability =
-    await LanguageDetector.availability();
-  return languageDetectorAvailability !== "unavailable";
 }
 
 export async function detectLanguages(inputText: string): Promise<string[]> {
