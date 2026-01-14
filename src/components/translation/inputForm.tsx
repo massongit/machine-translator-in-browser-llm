@@ -42,6 +42,7 @@ export function InputForm({
             setInputText(target.value);
             if (target.value === "") {
               setSourceLocales([]);
+              setOutputText("");
             }
           }}
           onCompositionStart={() => setIsComposing(true)}
