@@ -27,7 +27,7 @@
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "eslint": "10.0.3",
-    "eslint-config-next": "16.1.6",
+    "eslint-config-next": "16.1.7",
     "eslint-config-prettier": "10.1.8",
     "node-fetch": "2.6.12",
     "postcss": "8.5.8",
