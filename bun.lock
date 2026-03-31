@@ -16,7 +16,7 @@
         "@proofdict/textlint-rule-proofdict": "3.1.2",
         "@tailwindcss/postcss": "4.2.2",
         "@textlint-ja/textlint-rule-no-insert-dropping-sa": "2.0.1",
-        "@types/dom-chromium-ai": "0.0.15",
+        "@types/dom-chromium-ai": "0.0.16",
         "@types/minimatch": "6.0.0",
         "@types/node": "25.5.0",
         "@types/react": "19.2.14",
@@ -403,7 +403,7 @@
 
     "@types/debug": ["@types/debug@0.0.30", "", {}, "sha512-orGL5LXERPYsLov6CWs3Fh6203+dXzJkR7OnddIr2514Hsecwc8xRpzCapshBbKFImCsvS/mk6+FWiN5LyZJAQ=="],
 
-    "@types/dom-chromium-ai": ["@types/dom-chromium-ai@0.0.15", "", {}, "sha512-DHHYK3/PRbkjIClaQ9VGfi2JNAT/zpG3TCtaq1cMXrdIge9xOw0Qb+yi0csNpo0dGEnbmP4zE/ZslUH0CvYCWQ=="],
+    "@types/dom-chromium-ai": ["@types/dom-chromium-ai@0.0.16", "", {}, "sha512-Z0vOBWckovkc85zctYKGEUUBHaqt9Oz8AUhAVyoNLAsMGlBhMNl/8w1n8JG1y0g7TW03EzWt5RsdcDD70ra58g=="],
 
     "@types/esrecurse": ["@types/esrecurse@4.3.1", "", {}, "sha512-xJBAbDifo5hpffDBuHl0Y8ywswbiAp/Wi7Y/GtAgSlZyIABppyurxVueOPE8LUQOxdlgi6Zqce7uoEpqNTeiUw=="],
 
