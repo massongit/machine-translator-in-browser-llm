@@ -30,7 +30,7 @@
     "eslint-config-next": "16.2.10",
     "eslint-config-prettier": "10.1.8",
     "node-fetch": "2.6.12",
-    "postcss": "8.5.17",
+    "postcss": "8.5.18",
     "prettier": "3.9.5",
     "stylelint-config-standard": "40.0.0",
     "stylelint-config-tailwindcss": "1.0.1",
