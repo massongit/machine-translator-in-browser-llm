@@ -14,6 +14,7 @@ permissions:
   contents: write
   pull-requests: write
 jobs:
+  # jscpd:ignore-start
   format-json-yml:
     runs-on: ubuntu-latest
     steps:
@@ -34,6 +35,7 @@ jobs:
       - uses: dev-hato/actions-format-json-yml@6fa1a14b2f9b42d954cd105dabc9f77c4fbce575 # v0.0.105
         with:
           github-token: ${{steps.generate_token.outputs.token}}
+      # jscpd:ignore-end
 concurrency:
   group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
   cancel-in-progress: true
