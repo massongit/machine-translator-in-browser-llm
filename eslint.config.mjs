@@ -87,6 +87,11 @@ export default defineConfig([
       ecmaVersion: "latest",
       sourceType: "module",
     },
+
+    rules: {
+      "react/react-in-jsx-scope": "off",
+      "n/no-missing-import": "off",
+    },
   },
   ...pluginVue.configs["flat/recommended"],
 ]);
