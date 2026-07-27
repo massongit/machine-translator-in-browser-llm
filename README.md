@@ -12,8 +12,8 @@ Chromium AI APIsを使用した、ブラウザ内で動作する言語検出・�
 
 このアプリケーションは次のブラウザで動作します。
 
-- **Chrome** バージョン138以降
-- **Opera** バージョン122以降
+- **Chrome**バージョン138以降
+- **Opera**バージョン122以降
 
 ### 注意事項
 
@@ -64,7 +64,7 @@ pre-commit install
 bun dev
 ```
 
-ブラウザで `http://localhost:3000` を開いてアプリケーションを確認できます。
+ブラウザで`http://localhost:3000`を開いてアプリケーションを確認できます。
 
 ## 使い方
 
@@ -104,10 +104,10 @@ src/
 
 ### 重要な実装パターン
 
-- **SSRエラー回避**: ブラウザAPI（`LanguageDetector`、`Translator`）の存在チェックは `useEffect` 内でのみ実施
+- **SSRエラー回避**: ブラウザAPI（`LanguageDetector`、`Translator`）の存在チェックは`useEffect`内でのみ実施
 - **React Hooks規則**: すべてのフックは条件分岐より前に配置
 - **型安全性**: TypeScriptの厳格モードで型チェックを実施
-- **言語コードフィルタリング**: `Intl.DisplayNames` で表示可能な言語のみを選択肢に含める
+- **言語コードフィルタリング**: `Intl.DisplayNames`で表示可能な言語のみを選択肢に含める
 
 ## その他のコマンド
 
