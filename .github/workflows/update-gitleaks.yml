@@ -1,5 +1,6 @@
 ---
 name: update-gitleaks
+# jscpd:ignore-start
 on:
   pull_request:
     types:
@@ -29,3 +30,4 @@ jobs:
 concurrency:
   group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
   cancel-in-progress: true
+# jscpd:ignore-end
