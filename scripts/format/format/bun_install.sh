@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+tag_name="$(yq '.jobs.build.steps[-1].uses' .github/workflows/super-linter.yml | sed -e 's;/slim@.*;:slim;g')"
+tag_version="$(yq '.jobs.build.steps[-1].uses | line_comment' .github/workflows/super-linter.yml)"
+bun install
+bun add --dev "typescript@$(docker run --rm --entrypoint '' "ghcr.io/${tag_name}-${tag_version}" /bin/sh -c 'npm list --json typescript | yq -r .dependencies.typescript.version')"
+bunx prettier --write .
+bun run build
