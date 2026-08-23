@@ -16,8 +16,6 @@ permissions:
 jobs:
   format:
     runs-on: ubuntu-latest
-    env:
-      SAFE_CHAIN_MINIMUM_PACKAGE_AGE_HOURS: 168 # 7日
     steps:
       # jscpd:ignore-start
       - name: Generate a token
@@ -39,11 +37,10 @@ jobs:
         if: github.event_name != 'pull_request' || github.event.action != 'closed'
         with:
           bun-version-file: .bun-version
-      - name: Install
-        if: github.event_name != 'pull_request' || github.event.action != 'closed'
-        run: |
-          curl -fsSL https://raw.githubusercontent.com/AikidoSec/safe-chain/main/install-scripts/install-safe-chain.sh | sh -s -- --ci
-          bun install
+      - if: github.event_name != 'pull_request' || github.event.action != 'closed'
+        uses: flatt-security/setup-takumi-guard-npm@6d4182745c1e474c35a023573c2612c085be45a4 # v1.2.0
+      - if: github.event_name != 'pull_request' || github.event.action != 'closed'
+        run: bun install
       - run: bunx prettier --write .
         if: github.event_name != 'pull_request' || github.event.action != 'closed'
       - run: bun run build
