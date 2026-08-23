@@ -10,6 +10,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      # jscpd:ignore-start
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
@@ -18,6 +19,7 @@ jobs:
           bun-version-file: .bun-version
       - uses: flatt-security/setup-takumi-guard-npm@6d4182745c1e474c35a023573c2612c085be45a4 # v1.2.0
       - run: bun install
+      # jscpd:ignore-end
       - run: bun test
 concurrency:
   group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
