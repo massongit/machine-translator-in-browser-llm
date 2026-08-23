@@ -40,11 +40,7 @@ jobs:
       - if: github.event_name != 'pull_request' || github.event.action != 'closed'
         uses: flatt-security/setup-takumi-guard-npm@6d4182745c1e474c35a023573c2612c085be45a4 # v1.2.0
       - if: github.event_name != 'pull_request' || github.event.action != 'closed'
-        run: bun install
-      - run: bunx prettier --write .
-        if: github.event_name != 'pull_request' || github.event.action != 'closed'
-      - run: bun run build
-        if: github.event_name != 'pull_request' || github.event.action != 'closed'
+        run: bash "${GITHUB_WORKSPACE}/scripts/format/format/bun_install.sh"
       - uses: dev-hato/actions-diff-pr-management@571be0d9572aaf77cdd315c12d6e73a1112910d7 # v2.2.6
         with:
           github-token: ${{steps.generate_token.outputs.token}}
