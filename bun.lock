@@ -26,7 +26,7 @@
         "eslint-config-prettier": "10.1.8",
         "node-fetch": "2.6.12",
         "postcss": "8.5.28",
-        "prettier": "3.9.6",
+        "prettier": "3.9.8",
         "stylelint-config-standard": "40.0.0",
         "stylelint-config-tailwindcss": "1.0.1",
         "tailwindcss": "4.3.3",
@@ -1295,7 +1295,7 @@
 
     "prelude-ls": ["prelude-ls@1.2.1", "https://npm.flatt.tech/prelude-ls/-/prelude-ls-1.2.1.tgz", {}, "sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g=="],
 
-    "prettier": ["prettier@3.9.6", "https://npm.flatt.tech/prettier/-/prettier-3.9.6.tgz", { "bin": { "prettier": "bin/prettier.cjs" } }, "sha512-OpN0zzVdiaiAhxpuuj5efpIS4sY9j7bY6uR5mnj5yPzGkdkjNKSJeUThPb60Jw29QuAZgA4o+/iB49kFiaBX6g=="],
+    "prettier": ["prettier@3.9.8", "", { "bin": { "prettier": "bin/prettier.cjs" } }, "sha512-WRFq3Wn3WId7LLROfMLdH7xaFr2jR62wU8nLO6rQUOLOxNZUviyJQs1M0iIhLexSFy+L+w0ch66wtoO2jRjG0A=="],
 
     "pretty-format": ["pretty-format@30.4.1", "https://npm.flatt.tech/pretty-format/-/pretty-format-30.4.1.tgz", { "dependencies": { "@jest/schemas": "30.4.1", "ansi-styles": "^5.2.0", "react-is-18": "npm:react-is@^18.3.1", "react-is-19": "npm:react-is@^19.2.5" } }, "sha512-K6KiKMHTL4jjX4u3Kir2EW07nRfcqVTXIImx50wbjHQTcZPgg+gjVeNTIT3l3L1Rd4UefxfogquC9J37SoFyyw=="],
 
