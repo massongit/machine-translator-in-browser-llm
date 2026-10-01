@@ -18,7 +18,7 @@
         "@textlint-ja/textlint-rule-no-insert-dropping-sa": "2.0.1",
         "@types/dom-chromium-ai": "0.0.17",
         "@types/minimatch": "6.0.0",
-        "@types/node": "26.2.0",
+        "@types/node": "26.6.2",
         "@types/react": "19.2.18",
         "@types/react-dom": "19.2.4",
         "eslint": "10.8.1",
@@ -463,7 +463,7 @@
 
     "@types/minimatch": ["@types/minimatch@6.0.0", "https://npm.flatt.tech/@types/minimatch/-/minimatch-6.0.0.tgz", { "dependencies": { "minimatch": "*" } }, "sha512-zmPitbQ8+6zNutpwgcQuLcsEpn/Cj54Kbn7L5pX0Os5kdWplB7xPgEh/g+SWOB/qmows2gpuCaPyduq8ZZRnxA=="],
 
-    "@types/node": ["@types/node@26.2.0", "https://npm.flatt.tech/@types/node/-/node-26.2.0.tgz", { "dependencies": { "undici-types": "~8.3.0" } }, "sha512-5IviulTZeRNp2vAJ514cc/HUlY5nZ9fCbq9DMyC52BrhFZACo3nI0R7qBxhQmo/d27NFe96ur/b7Wwxklda+kg=="],
+    "@types/node": ["@types/node@26.6.2", "https://npm.flatt.tech/@types/node/-/node-26.6.2.tgz", { "dependencies": { "undici-types": "~8.9.0" } }, "sha512-X1P21scMv4zGKLYqjdGjaKa7COa0RKVYYZZN/NfvLQ1JegxFhdhpZG/Lyn8AXx6CDUavKAd11v6BvfpkDByK8g=="],
 
     "@types/normalize-package-data": ["@types/normalize-package-data@2.4.4", "https://npm.flatt.tech/@types/normalize-package-data/-/normalize-package-data-2.4.4.tgz", {}, "sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA=="],
 
@@ -1657,7 +1657,7 @@
 
     "unbox-primitive": ["unbox-primitive@1.1.0", "https://npm.flatt.tech/unbox-primitive/-/unbox-primitive-1.1.0.tgz", { "dependencies": { "call-bound": "^1.0.3", "has-bigints": "^1.0.2", "has-symbols": "^1.1.0", "which-boxed-primitive": "^1.1.1" } }, "sha512-nWJ91DjeOkej/TA8pXQ3myruKpKEYgqvpw9lz4OPHj/NWFNluYrjbz9j01CJ8yKQd2g4jFoOkINCTW2I5LEEyw=="],
 
-    "undici-types": ["undici-types@8.3.0", "https://npm.flatt.tech/undici-types/-/undici-types-8.3.0.tgz", {}, "sha512-j375ScV60dom+YkPFIfTLcOiPxkN/buHz5GobjLhixFuANaNs3C9l4GmrWqejgXWJ7BbJcFYpTEUkS1Ge8bpZQ=="],
+    "undici-types": ["undici-types@8.9.0", "https://npm.flatt.tech/undici-types/-/undici-types-8.9.0.tgz", {}, "sha512-KTDyRTYX8sWmKXAikPHHSyc63CRPETMctyjKFupcC6OBLXT3xsN0e9aF7m+mIXutFWpUXuedtowG7iLOzp0kQg=="],
 
     "unicorn-magic": ["unicorn-magic@0.4.1", "https://npm.flatt.tech/unicorn-magic/-/unicorn-magic-0.4.1.tgz", {}, "sha512-lzlXPoVB0Uy/FvTaUgX39RbixYiSKoc3JSoSf01+0c2B6FR3qdYIPN7Qjo/AV7n6sqLCk0509cT3LRj1oSZ1+A=="],
 
