@@ -1,8 +1,5 @@
 {
   "extends": ["stylelint-config-standard", "stylelint-config-tailwindcss"],
-  "rules": {
-    "import-notation": "string"
-  },
   "overrides": [
     {
       "extends": ["stylelint-config-recommended-scss"],
