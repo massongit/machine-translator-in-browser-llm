@@ -16,7 +16,7 @@
         "@proofdict/textlint-rule-proofdict": "3.1.2",
         "@tailwindcss/postcss": "4.3.3",
         "@textlint-ja/textlint-rule-no-insert-dropping-sa": "2.0.1",
-        "@types/dom-chromium-ai": "0.0.17",
+        "@types/dom-chromium-ai": "0.0.18",
         "@types/minimatch": "6.0.0",
         "@types/node": "26.6.6",
         "@types/react": "19.3.0",
@@ -441,7 +441,7 @@
 
     "@types/debug": ["@types/debug@0.0.30", "https://npm.flatt.tech/@types/debug/-/debug-0.0.30.tgz", {}, "sha512-orGL5LXERPYsLov6CWs3Fh6203+dXzJkR7OnddIr2514Hsecwc8xRpzCapshBbKFImCsvS/mk6+FWiN5LyZJAQ=="],
 
-    "@types/dom-chromium-ai": ["@types/dom-chromium-ai@0.0.17", "https://npm.flatt.tech/@types/dom-chromium-ai/-/dom-chromium-ai-0.0.17.tgz", {}, "sha512-UnSAIVKONaY2vTAM4TkPpwdKeGgg3tPCwNP3KxR+U8bLYC2rQU7UrgW9LIVx0B02dKZxuPA6a0Q5wvyW5Rk6nw=="],
+    "@types/dom-chromium-ai": ["@types/dom-chromium-ai@0.0.18", "https://npm.flatt.tech/@types/dom-chromium-ai/-/dom-chromium-ai-0.0.18.tgz", {}, "sha512-/ZITAMdViQlLmEs56d/ET9qJ42EfnrBrLw5gRB4p0raDoavGDacqP9VITK8wNM0f9bPmnddHZeJ+FWIkWi6JlQ=="],
 
     "@types/esrecurse": ["@types/esrecurse@4.3.1", "https://npm.flatt.tech/@types/esrecurse/-/esrecurse-4.3.1.tgz", {}, "sha512-xJBAbDifo5hpffDBuHl0Y8ywswbiAp/Wi7Y/GtAgSlZyIABppyurxVueOPE8LUQOxdlgi6Zqce7uoEpqNTeiUw=="],
 
